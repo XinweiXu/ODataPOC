@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+	<edmx:DataServices>
+		<Schema Namespace="WeatherAPI.Models" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+			<EntityType Name="Message">
+				<Key>
+					<PropertyRef Name="id" />
+				</Key>
+				<Property Name="id" Type="Edm.Int64" Nullable="false" />
+				<Property Name="allowReminder" Type="Edm.Boolean" />
+				<Property Name="tenantId" Type="Edm.Guid" />
+				<Property Name="senderId" Type="Edm.Guid" Nullable="false" />
+				<Property Name="categoryId" Type="Edm.Int16" />
+				<Property Name="isCompleted" Type="Edm.Boolean" Nullable="false" />
+				<Property Name="isImportant" Type="Edm.Boolean" Nullable="false" />
+				<Property Name="isExpired" Type="Edm.Boolean" Nullable="false" />
+				<Property Name="requiresAcknowledgement" Type="Edm.Boolean" Nullable="false" />
+				<Property Name="statusId" Type="Edm.Int16" Nullable="false" />
+				<Property Name="expiry" Type="Edm.DateTimeOffset" />
+				<Property Name="read" Type="Edm.DateTimeOffset" />
+				<Property Name="acknowledged" Type="Edm.DateTimeOffset" />
+				<Property Name="sent" Type="Edm.DateTimeOffset" />
+				<Property Name="isEnabled" Type="Edm.Boolean" />
+				<Property Name="createdBy" Type="Edm.Guid" Nullable="false" />
+				<Property Name="modifiedBy" Type="Edm.Guid" />
+				<Property Name="created" Type="Edm.DateTimeOffset" Nullable="false" />
+				<Property Name="modified" Type="Edm.DateTimeOffset" />
+				<NavigationProperty Name="category" Type="WeatherAPI.Models.Category">
+					<ReferentialConstraint Property="categoryId" ReferencedProperty="id" />
+				</NavigationProperty>
+				<NavigationProperty Name="status" Type="WeatherAPI.Models.MessageStatus" />
+				<NavigationProperty Name="messageContents" Type="Collection(WeatherAPI.Models.MessageContent)" />
+				<NavigationProperty Name="messageDetails" Type="Collection(WeatherAPI.Models.MessageDetail)" />
+				<NavigationProperty Name="messageRecipients" Type="Collection(WeatherAPI.Models.MessageRecipient)" />
+			</EntityType>
+			<EntityType Name="Category">
+				<Key>
+					<PropertyRef Name="id" />
+				</Key>
+				<Property Name="id" Type="Edm.Int16" Nullable="false" />
+				<Property Name="name" Type="Edm.String" />
+				<Property Name="isEnabled" Type="Edm.Boolean" />
+				<Property Name="createdBy" Type="Edm.Guid" Nullable="false" />
+				<Property Name="modifiedBy" Type="Edm.Guid" />
+				<Property Name="created" Type="Edm.DateTimeOffset" Nullable="false" />
+				<Property Name="modified" Type="Edm.DateTimeOffset" />
+				<NavigationProperty Name="messages" Type="Collection(WeatherAPI.Models.Message)" />
+			</EntityType>
+			<EntityType Name="MessageStatus">
+				<Key>
+					<PropertyRef Name="id" />
+				</Key>
+				<Property Name="id" Type="Edm.Int16" Nullable="false" />
+				<Property Name="statusName" Type="Edm.String" />
+				<Property Name="isEnabled" Type="Edm.Boolean" />
+				<Property Name="createdBy" Type="Edm.Guid" Nullable="false" />
+				<Property Name="modifiedBy" Type="Edm.Guid" />
+				<Property Name="created" Type="Edm.DateTimeOffset" Nullable="false" />
+				<Property Name="modified" Type="Edm.DateTimeOffset" />
+				<NavigationProperty Name="messages" Type="Collection(WeatherAPI.Models.Message)" />
+			</EntityType>
+			<EntityType Name="MessageContent">
+				<Key>
+					<PropertyRef Name="id" />
+				</Key>
+				<Property Name="id" Type="Edm.Int64" Nullable="false" />
+				<Property Name="contentId" Type="Edm.Guid" Nullable="false" />
+				<Property Name="contentTypeId" Type="Edm.Guid" Nullable="false" />
+				<Property Name="messageId" Type="Edm.Int64" />
+				<Property Name="isEnabled" Type="Edm.Boolean" />
+				<Property Name="createdBy" Type="Edm.Guid" Nullable="false" />
+				<Property Name="modifiedBy" Type="Edm.Guid" />
+				<Property Name="created" Type="Edm.DateTimeOffset" Nullable="false" />
+				<Property Name="modified" Type="Edm.DateTimeOffset" />
+				<NavigationProperty Name="message" Type="WeatherAPI.Models.Message">
+					<ReferentialConstraint Property="messageId" ReferencedProperty="id" />
+				</NavigationProperty>
+			</EntityType>
+			<EntityType Name="MessageDetail">
+				<Key>
+					<PropertyRef Name="id" />
+				</Key>
+				<Property Name="id" Type="Edm.Int64" Nullable="false" />
+				<Property Name="languageCode" Type="Edm.String" />
+				<Property Name="subject" Type="Edm.String" />
+				<Property Name="body" Type="Edm.String" />
+				<Property Name="messageId" Type="Edm.Int64" />
+				<Property Name="isEnabled" Type="Edm.Boolean" />
+				<Property Name="createdBy" Type="Edm.Guid" Nullable="false" />
+				<Property Name="modifiedBy" Type="Edm.Guid" />
+				<Property Name="created" Type="Edm.DateTimeOffset" Nullable="false" />
+				<Property Name="modified" Type="Edm.DateTimeOffset" />
+				<NavigationProperty Name="message" Type="WeatherAPI.Models.Message">
+					<ReferentialConstraint Property="messageId" ReferencedProperty="id" />
+				</NavigationProperty>
+				<NavigationProperty Name="messageRecipientDetails" Type="Collection(WeatherAPI.Models.MessageRecipientDetail)" />
+			</EntityType>
+			<EntityType Name="MessageRecipientDetail">
+				<Key>
+					<PropertyRef Name="id" />
+				</Key>
+				<Property Name="id" Type="Edm.Int64" Nullable="false" />
+				<Property Name="recipientId" Type="Edm.Int64" Nullable="false" />
+				<Property Name="placeholderValue" Type="Edm.String" />
+				<Property Name="isExpired" Type="Edm.Boolean" />
+				<Property Name="received" Type="Edm.DateTimeOffset" />
+				<Property Name="expiry" Type="Edm.DateTimeOffset" />
+				<Property Name="read" Type="Edm.DateTimeOffset" />
+				<Property Name="acknowledged" Type="Edm.DateTimeOffset" />
+				<Property Name="messageDetailId" Type="Edm.Int64" />
+				<Property Name="messageRecipientId" Type="Edm.Int64" />
+				<Property Name="isEnabled" Type="Edm.Boolean" />
+				<Property Name="createdBy" Type="Edm.Guid" Nullable="false" />
+				<Property Name="modifiedBy" Type="Edm.Guid" />
+				<Property Name="created" Type="Edm.DateTimeOffset" Nullable="false" />
+				<Property Name="modified" Type="Edm.DateTimeOffset" />
+				<NavigationProperty Name="messageDetail" Type="WeatherAPI.Models.MessageDetail">
+					<ReferentialConstraint Property="messageDetailId" ReferencedProperty="id" />
+				</NavigationProperty>
+				<NavigationProperty Name="messageRecipient" Type="WeatherAPI.Models.MessageRecipient">
+					<ReferentialConstraint Property="messageRecipientId" ReferencedProperty="id" />
+				</NavigationProperty>
+			</EntityType>
+			<EntityType Name="MessageRecipient">
+				<Key>
+					<PropertyRef Name="id" />
+				</Key>
+				<Property Name="id" Type="Edm.Int64" Nullable="false" />
+				<Property Name="userId" Type="Collection(Edm.Guid)" Nullable="false" />
+				<Property Name="groupId" Type="Collection(Edm.Guid)" Nullable="false" />
+				<Property Name="name" Type="Edm.String" />
+				<Property Name="messageId" Type="Edm.Int64" />
+				<Property Name="isEnabled" Type="Edm.Boolean" />
+				<Property Name="createdBy" Type="Edm.Guid" Nullable="false" />
+				<Property Name="modifiedBy" Type="Edm.Guid" />
+				<Property Name="created" Type="Edm.DateTimeOffset" Nullable="false" />
+				<Property Name="modified" Type="Edm.DateTimeOffset" />
+				<NavigationProperty Name="message" Type="WeatherAPI.Models.Message">
+					<ReferentialConstraint Property="messageId" ReferencedProperty="id" />
+				</NavigationProperty>
+				<NavigationProperty Name="messageRecipientDetails" Type="Collection(WeatherAPI.Models.MessageRecipientDetail)" />
+			</EntityType>
+		</Schema>
+		<Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+			<EntityContainer Name="Container">
+				<EntitySet Name="Messages" EntityType="WeatherAPI.Models.Message" />
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
